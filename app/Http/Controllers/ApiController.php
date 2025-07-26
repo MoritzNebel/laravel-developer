@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Golfer;
 
-class GolferController extends Controller
+class ApiController extends Controller
 {
-    public function showGolferWithCoordinates($longitude, $latitude) {
+
+    public function golferByCoordinates($longitude, $latitude) {
 
         if (!is_numeric($longitude) || !is_numeric($latitude))  abort(400, 'Invalid coordinates');
 
-        $earthRadius = 6371;
+        $earthRadius = env("EARTH_RADIUS");
 
         $golfers = Golfer::select('*')
             ->selectRaw("(
@@ -29,4 +30,5 @@ class GolferController extends Controller
 
         return response()->json($golfers);
     }
+
 }
