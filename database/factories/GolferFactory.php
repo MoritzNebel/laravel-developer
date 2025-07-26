@@ -11,7 +11,7 @@ use Random\RandomException;
  */
 class GolferFactory extends Factory
 {
-    private static int $debitorAccount = 1;
+    private static ?int $debitorAccount = null;
 
     /**
      * Define the model's default state.
@@ -21,6 +21,9 @@ class GolferFactory extends Factory
      */
     public function definition(): array
     {
+
+        self::$debitorAccount ??= (Golfer::max('debitor_account') ?? 0) + 1;
+
         return [
             'debitor_account' => self::$debitorAccount++,
             'name' => fake()->name(),
