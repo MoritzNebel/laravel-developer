@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Golfer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Random\RandomException;
 
@@ -10,6 +11,8 @@ use Random\RandomException;
  */
 class GolferFactory extends Factory
 {
+    private static int $debitorAccount = 1;
+
     /**
      * Define the model's default state.
      *
@@ -19,7 +22,7 @@ class GolferFactory extends Factory
     public function definition(): array
     {
         return [
-            'debitor_account' => fake()->randomNumber(random_int(5, 9)),
+            'debitor_account' => self::$debitorAccount++,
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'born_at' => today()->subDays(random_int(0, 365))->subYears(random_int(10, 100))->toImmutable(),
